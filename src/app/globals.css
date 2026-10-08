@@ -1,1 +1,31 @@
 @import "tailwindcss";
+
+@keyframes market-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.market-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: market-marquee-scroll 38s linear infinite;
+}
+
+.market-marquee-window:hover .market-marquee-track,
+.market-marquee-window:focus-within .market-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-marquee-track {
+    animation: none;
+  }
+
+  .market-marquee-window {
+    overflow-x: auto;
+  }
+}

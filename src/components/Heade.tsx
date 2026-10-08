@@ -2,35 +2,42 @@ import Image from "next/image";
 import logoIcon from "../assets/logo-icon.png";
 import NavLinks from "./NavLinks";
 import { Suspense } from "react";
+import Marquee from "./Marquee";
 
 const Header = () => {
   const date = new Date().toLocaleDateString("bn-BD", { dateStyle: "full" });
   return (
     <header>
-      <div className="flex justify-between container mx-auto px-4 py-4">
-        <div className="flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-2">
-          <div className="bg-[#05893E] p-4 rounded-2xl flex items-center justify-center">
+      <div className="container mx-auto flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+        {/* Logo + Website Name */}
+        <div className="flex items-center justify-center gap-2 sm:justify-start">
+          <div className="flex items-center justify-center rounded-2xl bg-[#05893E] p-3 sm:p-4">
             <Image src={logoIcon} alt="Logo" width={23} height={20} />
           </div>
 
           <div className="flex flex-col items-center sm:items-start">
-            <span className="text-2xl font-bold ">বাজার দর</span>
+            <span className="text-xl font-bold sm:text-2xl">বাজার দর</span>
+
             <span className="text-xs text-neutral-500">{date}</span>
           </div>
         </div>
 
-        <div className="flex w-full items-center justify-center gap-2 sm:right-4 sm:top-4 sm:w-auto md:right-4 lg:right-30 mt-4 sm:mt-0">
-          <button className="btn btn-ghost font-bold p-3 text-sm text-neutral-700 transition-colors sm:px-3 hover:bg-gray-300 hover:rounded-2xl">
+        {/* Sign In / Sign Up */}
+        <div className="flex w-full items-center justify-center gap-2 sm:w-auto">
+          <button className="rounded-2xl px-3 py-2 text-sm font-bold text-neutral-700 transition-colors hover:bg-gray-300 sm:px-4">
             সাইন ইন
           </button>
 
-          <button className="btn bg-[#05893E] rounded-2xl p-3 text-sm font-semibold text-white transition-colors hover:bg-green-800 sm:px-4">
+          <button className="rounded-2xl bg-[#05893E] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-800 sm:px-5">
             সাইন আপ
           </button>
         </div>
       </div>
+
+      <NavLinks />
+
       <Suspense fallback="Loading...">
-        <NavLinks />
+        <Marquee />
       </Suspense>
     </header>
   );

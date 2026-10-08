@@ -1,40 +1,4 @@
-// import Link from "next/link";
-// import React from "react";
-
-// interface Navs {
-//   slug: string;
-//   title: string;
-//   nameBn: string;
-//   icon: string;
-// }
-
-// const NavLinks = async () => {
-//   const res = await fetch(
-//     "https://api.abcz.workers.dev/api/bazardor/categories",
-//     {
-//       cache: "no-store",
-//     },
-//   );
-//   const data = await res.json();
-//   const navs: Navs[] = data.data;
-
-//   return (
-//     <div className=" flex gap-5 justify-center mt-5">
-//       <Link className="hover:text-red-600" href="/">
-//         হোম
-//       </Link>
-
-//       {navs.map((n, i) => (
-//         <Link className="hover:text-red-600" href={n.slug} key={i}>
-//           {n.nameBn}
-//         </Link>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default NavLinks;
-
+//
 import Link from "next/link";
 import React from "react";
 
@@ -60,18 +24,20 @@ const NavLinks = async () => {
   const navs: Navs[] = await res.json();
 
   return (
-    <div className="mt-5 flex justify-center gap-5">
-      {navs.map((n) => (
-        <Link
-          className="flex items-center gap-1 rounded-2xl hover:border hover:border-gray-300 px-3 py-2 text-sm font-semibold text-neutral-700 hover:bg-gray-300"
-          href={`/${n.slug}`}
-          key={n.id}
-        >
-          <span>{n.icon}</span>
-          <p>{n.nameBn}</p>
-        </Link>
-      ))}
-    </div>
+    <nav className="mx-auto mt-4 w-full max-w-7xl px-3 sm:mt-5 sm:px-4">
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4">
+        {navs.map((n) => (
+          <Link
+            key={n.id}
+            href={`/${n.slug}`}
+            className="flex items-center gap-1 rounded-2xl border border-transparent px-3 py-2 text-md font-semibold text-neutral-700 transition hover:border-gray-300 hover:bg-gray-300 hover:font-bold sm:px-4"
+          >
+            <span>{n.icon}</span>
+            <span>{n.nameBn}</span>
+          </Link>
+        ))}
+      </div>
+    </nav>
   );
 };
 
