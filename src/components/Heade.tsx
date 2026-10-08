@@ -3,9 +3,10 @@ import logoIcon from "../assets/logo-icon.png";
 import NavLinks from "./NavLinks";
 import { Suspense } from "react";
 import Marquee from "./Marquee";
+import Banner from "./Banner";
+import CurrentDate from "./CurrentDate";
 
 const Header = () => {
-  const date = new Date().toLocaleDateString("bn-BD", { dateStyle: "full" });
   return (
     <header>
       <div className="container mx-auto flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
@@ -18,7 +19,9 @@ const Header = () => {
           <div className="flex flex-col items-center sm:items-start">
             <span className="text-xl font-bold sm:text-2xl">বাজার দর</span>
 
-            <span className="text-xs text-neutral-500">{date}</span>
+            <span className="text-xs text-neutral-500">
+              <CurrentDate />
+            </span>
           </div>
         </div>
 
@@ -34,11 +37,15 @@ const Header = () => {
         </div>
       </div>
 
-      <NavLinks />
+      <Suspense fallback={null}>
+        <NavLinks />
+      </Suspense>
 
       <Suspense fallback="Loading...">
         <Marquee />
       </Suspense>
+
+      <Banner />
     </header>
   );
 };
