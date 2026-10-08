@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import bazarHero from "../assets/bazar-hero.png";
 import CurrentDate from "./CurrentDate";
 
@@ -20,12 +21,12 @@ const Banner = () => {
             চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক
             বিস্তৃত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
           </p>
-          <button
-            type="button"
-            className="mt-6 rounded-xl border-2 border-white bg-[#05893e] px-5 py-2.5 text-base font-bold text-white transition-colors hover:bg-[#047333] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#05893e]"
+          <Link
+            href="./MostHighProduct.tsx"
+            className="mt-6 inline-flex items-center rounded-xl border-2 border-white bg-[#05893e] px-5 py-2.5 text-base font-bold text-white transition-colors hover:bg-[#047333] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#05893e]"
           >
             সব পণ্য দেখুন
-          </button>
+          </Link>
         </div>
 
         <Image

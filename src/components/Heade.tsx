@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import Marquee from "./Marquee";
 import Banner from "./Banner";
 import CurrentDate from "./CurrentDate";
+import MostHighProduct from "./MostHighProduct";
 
 const Header = () => {
   return (
@@ -46,6 +47,9 @@ const Header = () => {
       </Suspense>
 
       <Banner />
+      <Suspense fallback={null}>
+        <MostHighProduct />
+      </Suspense>
     </header>
   );
 };
