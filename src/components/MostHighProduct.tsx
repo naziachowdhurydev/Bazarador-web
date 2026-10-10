@@ -22,6 +22,8 @@ const formatUnit = (unit: string) => {
     case "litre":
     case "liter":
       return "প্রতি লিটার";
+    case "dozen":
+      return "প্রতি ডজন";
     case "piece":
       return "প্রতি পিস";
     default:

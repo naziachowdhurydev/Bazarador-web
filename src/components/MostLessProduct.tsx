@@ -20,15 +20,38 @@ const percentageFormatter = new Intl.NumberFormat("bn-BD", {
   maximumFractionDigits: 1,
 });
 
-const formatUnit = (unit: string) => {
+// const formatUnit = (unit: string) => {
+//   switch (unit.toLowerCase()) {
+//     case "kg":
+//       return "প্রতি কেজি";
+//     case "litre":
+//     case "liter":
+//       return "প্রতি লিটার";
+//     case "piece":
+//       return "প্রতি পিস";
+//     default:
+//       return `প্রতি ${unit}`;
+//   }
+// };
+const formatUnit = (unit: string, productName: string) => {
+  if (productName.includes("তেল") || productName.includes("তৈল")) {
+    return "প্রতি লিটার";
+  }
+
   switch (unit.toLowerCase()) {
     case "kg":
       return "প্রতি কেজি";
+
     case "litre":
     case "liter":
       return "প্রতি লিটার";
+
     case "piece":
       return "প্রতি পিস";
+
+    case "dozen":
+      return "প্রতি ডজন";
+
     default:
       return `প্রতি ${unit}`;
   }
@@ -97,9 +120,9 @@ const MostLessProduct = () => {
       <div className="mx-auto max-w-295">
         <h2
           id="most-less-products-title"
-          className="mb-4 flex items-center gap-2 text-[1.8rem] font-bold leading-none text-[#171b18] sm:text-[2.25rem]"
+          className="mb-4 flex items-center gap-2 text-xl font-bold text-[#171b18] sm:text-2xl"
         >
-          <span aria-hidden="true" className="text-[#15803d]">
+          <span aria-hidden="true" className="text-[#15803d] text-base">
             ▼
           </span>
           আজ দাম কমছে
@@ -119,11 +142,14 @@ const MostLessProduct = () => {
                   {product.image}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="truncate text-[1.1rem] font-bold text-[#171b18] sm:text-[1.35rem]">
+                  <h3 className="truncate text-lg leading-snug font-bold text-[#171b18]">
                     {product.nameBn}
                   </h3>
-                  <p className="text-sm text-[#5b645f]">
+                  {/* <p className="text-sm text-[#5b645f]">
                     {formatUnit(product.unit)}
+                  </p> */}
+                  <p className="text-sm text-[#5b645f]">
+                    {formatUnit(product.unit, product.nameBn)}
                   </p>
                 </div>
               </div>
