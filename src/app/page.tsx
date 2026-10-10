@@ -2,6 +2,7 @@ import MostLessProduct from "@/components/MostLessProduct";
 import MostHighProduct from "@/components/MostHighProduct";
 import Banner from "@/components/Banner";
 import { Suspense } from "react";
+import AllProducts from "@/components/AllProducts";
 
 export default function Home() {
   return (
@@ -11,6 +12,9 @@ export default function Home() {
         <MostHighProduct />
       </Suspense>
       <MostLessProduct />
+      <Suspense fallback={null}>
+        <AllProducts />
+      </Suspense>
     </>
   );
 }
