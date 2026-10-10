@@ -3,9 +3,7 @@ import logoIcon from "../assets/logo-icon.png";
 import NavLinks from "./NavLinks";
 import { Suspense } from "react";
 import Marquee from "./Marquee";
-import Banner from "./Banner";
 import CurrentDate from "./CurrentDate";
-import MostHighProduct from "./MostHighProduct";
 
 const Header = () => {
   return (
@@ -46,10 +44,6 @@ const Header = () => {
         <Marquee />
       </Suspense>
 
-      <Banner />
-      <Suspense fallback={null}>
-        <MostHighProduct />
-      </Suspense>
     </header>
   );
 };

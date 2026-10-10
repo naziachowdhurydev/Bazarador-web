@@ -29,7 +29,7 @@ const NavLinks = async () => {
         {navs.map((n) => (
           <Link
             key={n.id}
-            href={`/${n.slug}`}
+            href={`/category/${n.slug}`}
             className="flex items-center gap-1 rounded-2xl border border-transparent px-3 py-2 text-md font-semibold text-neutral-700 transition hover:border-gray-300 hover:bg-gray-300 hover:font-bold sm:px-4"
           >
             <span>{n.icon}</span>

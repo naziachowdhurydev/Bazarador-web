@@ -20,19 +20,6 @@ const percentageFormatter = new Intl.NumberFormat("bn-BD", {
   maximumFractionDigits: 1,
 });
 
-// const formatUnit = (unit: string) => {
-//   switch (unit.toLowerCase()) {
-//     case "kg":
-//       return "প্রতি কেজি";
-//     case "litre":
-//     case "liter":
-//       return "প্রতি লিটার";
-//     case "piece":
-//       return "প্রতি পিস";
-//     default:
-//       return `প্রতি ${unit}`;
-//   }
-// };
 const formatUnit = (unit: string, productName: string) => {
   if (productName.includes("তেল") || productName.includes("তৈল")) {
     return "প্রতি লিটার";
@@ -65,7 +52,7 @@ const MostLessProduct = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          "https://api.abcz.workers.dev/api/bazardor/products",
+          "https://api.api-store.workers.dev/api/bazardor/products",
         );
 
         if (!res.ok) {
@@ -145,9 +132,7 @@ const MostLessProduct = () => {
                   <h3 className="truncate text-lg leading-snug font-bold text-[#171b18]">
                     {product.nameBn}
                   </h3>
-                  {/* <p className="text-sm text-[#5b645f]">
-                    {formatUnit(product.unit)}
-                  </p> */}
+
                   <p className="text-sm text-[#5b645f]">
                     {formatUnit(product.unit, product.nameBn)}
                   </p>
