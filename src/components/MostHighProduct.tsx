@@ -1,14 +1,5 @@
-interface Product {
-  id: number;
-  nameBn: string;
-  image: string;
-  unit: string;
-  today: number;
-  change: {
-    dir: "up" | "down" | "same";
-    pct: number;
-  };
-}
+import Link from "next/link";
+import { fetchProductsByChange } from "@/lib/products";
 
 const priceFormatter = new Intl.NumberFormat("bn-BD");
 const percentageFormatter = new Intl.NumberFormat("bn-BD", {
@@ -32,22 +23,7 @@ const formatUnit = (unit: string) => {
 };
 
 const MostHighProduct = async () => {
-  const res = await fetch(
-    "https://openapi.programming-hero.com/api/bazardor/products",
-    {
-      cache: "no-store",
-    },
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch products with rising prices");
-  }
-
-  const products: Product[] = await res.json();
-  const topRisingProducts = products
-    .filter((product) => product.change.dir === "up")
-    .sort((first, second) => second.change.pct - first.change.pct)
-    .slice(0, 6);
+  const topRisingProducts = await fetchProductsByChange("up");
 
   if (topRisingProducts.length === 0) {
     return null;
@@ -72,9 +48,11 @@ const MostHighProduct = async () => {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ">
           {topRisingProducts.map((product) => (
-            <article
+            <Link
               key={product.id}
-              className="rounded-2xl border border-[#dfe7e0] bg-[#fafcfb] p-4 hover:border-green-600"
+              href={`/products/${product.id}`}
+              aria-label={`${product.nameBn}র বিস্তারিত দেখুন`}
+              className="block rounded-2xl border border-[#dfe7e0] bg-[#fafcfb] p-4 hover:border-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16834b]"
             >
               <div className="flex items-center gap-3">
                 <span
@@ -105,7 +83,7 @@ const MostHighProduct = async () => {
                   <span>{percentageFormatter.format(product.change.pct)}%</span>
                 </span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>
