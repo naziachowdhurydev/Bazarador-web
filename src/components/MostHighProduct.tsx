@@ -35,7 +35,7 @@ const MostHighProduct = async () => {
       aria-labelledby="most-high-products-title"
       className="bg-[#f0f5f0] px-4 pb-10 pt-5 sm:px-6 sm:pb-12"
     >
-      <div className="mx-auto max-w-297">
+      <div className="mx-auto container">
         <h2
           id="most-high-products-title"
           className="mb-4 flex items-center gap-2 text-xl font-bold text-[#171b18] sm:text-2xl"

@@ -54,7 +54,7 @@ const AllProducts = async () => {
       aria-labelledby="all-products-title"
       className="scroll-mt-56 bg-[#f0f5f0] px-4 pb-10 pt-5 sm:px-6 sm:pb-12"
     >
-      <div className="mx-auto max-w-295">
+      <div className="mx-auto container">
         <div className="mb-4 flex items-end justify-between gap-3">
           <div>
             <h2
