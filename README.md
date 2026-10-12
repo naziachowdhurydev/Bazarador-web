@@ -56,7 +56,7 @@ Users can browse product categories, view current and previous prices, see price
 - **React Toastify** - Notifications
 - **REST API** - Fetching product and category data
 
-## ✨ Features
+## ✨ Key Features
 
 ### 1. 📊 Current Market Prices
 
@@ -114,10 +114,6 @@ bazar-dor/
 └── README.md
 ```
 
-# 🛒 বাজার দর | BazarDor
-
-**বাজার দর (BazarDor)** is a modern and responsive market price tracking web application. It helps users easily browse grocery products, check their current prices, compare price changes, and stay updated with the latest market information.
-
 ## 🛠️ Technologies Used
 
 - Next.js
@@ -128,28 +124,6 @@ bazar-dor/
 - Better Auth
 - REST API
 - React Toastify
-
-## ✨ Key Features
-
-### 1. 🛍️ Product Price Tracking
-
-Users can browse different grocery products and view their latest market prices.
-
-### 2. 📊 Price Comparison
-
-Users can compare today's price with the previous price to understand how product prices have changed.
-
-### 3. 📂 Product Categories
-
-Products are organized into different categories, making it easy to find specific products.
-
-### 4. 🔐 User Authentication
-
-Users can create an account, sign in, sign out, and securely manage their account.
-
-### 5. 👤 User Profile Management
-
-Authenticated users can view and update their profile information and profile image.
 
 ## 📱 Responsive Design
 
