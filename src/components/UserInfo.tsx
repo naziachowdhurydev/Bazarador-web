@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
 
@@ -33,9 +34,12 @@ const UserInfo = () => {
           <Link href={"/profile"}>
             <div className="avatar">
               <div className="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2 sm:w-10">
-                <img
-                  src={user?.image as string}
-                  alt="Tailwind-CSS-Avatar-component"
+                <Image
+                  src={user?.image || "/default-avatar.png"}
+                  alt="User profile"
+                  width={40}
+                  height={40}
+                  className="rounded-full object-cover"
                 />
               </div>
             </div>
