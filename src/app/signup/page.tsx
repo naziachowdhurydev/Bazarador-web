@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { authClient } from "@/lib/auth-client";
 
 export default function SignUpPage() {
@@ -37,6 +39,11 @@ export default function SignUpPage() {
 
       if (result.error) {
         console.error("Signup error:", result.error);
+        if (result.error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL") {
+          toast.error("User already exists. Use another email.");
+          return;
+        }
+
         setError(
           result.error.message ??
             "অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।",
@@ -58,6 +65,7 @@ export default function SignUpPage() {
 
   return (
     <main className="flex flex-1 items-center justify-center bg-[#f0f5f0] px-4 py-10 sm:px-6 sm:py-14">
+      <ToastContainer position="top-right" autoClose={5000} />
       <div className="w-full max-w-md">
         <header className="mb-5 text-center sm:mb-6">
           <h1 className="text-2xl font-bold text-[#171b18] sm:text-3xl">
