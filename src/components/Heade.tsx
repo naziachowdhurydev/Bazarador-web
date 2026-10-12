@@ -56,8 +56,8 @@ import UserInfo from "./UserInfo";
 
 const Header = () => {
   return (
-    <header>
-      <div className="relative container mx-auto min-h-[100px] px-3 py-3 sm:min-h-[110px] sm:px-4 sm:py-4 md:min-h-[90px]">
+    <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
+      <div className="relative container mx-auto min-h-25 px-3 py-3 sm:min-h-27.5 sm:px-4 sm:py-4 md:min-h-22.5">
         {/* Logo + Website Name */}
         <Link href="/">
           <div className="flex w-fit items-center gap-2">
