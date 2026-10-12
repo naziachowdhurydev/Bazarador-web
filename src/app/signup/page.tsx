@@ -10,6 +10,7 @@ export default function SignUpPage() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [socialProvider, setSocialProvider] = useState("");
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -66,6 +67,38 @@ export default function SignUpPage() {
       toast.error(message);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleSocialSignUp = async (provider: "google" | "github") => {
+    setError("");
+    setSocialProvider(provider);
+
+    try {
+      const result = await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
+      });
+
+      if (result.error) {
+        const message =
+          result.error.message ??
+          `${provider === "google" ? "Google" : "GitHub"} দিয়ে সাইন আপ করা যায়নি।`;
+        setError(message);
+        toast.error(message);
+        return;
+      }
+
+      toast.success(
+        `${provider === "google" ? "Google" : "GitHub"} দিয়ে সাইন আপ সফল হয়েছে।`,
+      );
+    } catch (socialSignUpError) {
+      console.error(`Failed to sign up with ${provider}:`, socialSignUpError);
+      const message = `${provider === "google" ? "Google" : "GitHub"} দিয়ে সাইন আপ করা যায়নি। আবার চেষ্টা করুন।`;
+      setError(message);
+      toast.error(message);
+    } finally {
+      setSocialProvider("");
     }
   };
 
@@ -167,7 +200,7 @@ export default function SignUpPage() {
               <button
                 type="submit"
                 className="btn btn-success mt-1 min-h-11 w-full border-0 bg-[#05893e] text-sm font-semibold text-white hover:bg-[#047333] sm:text-base"
-                disabled={isSubmitting}
+                disabled={isSubmitting || socialProvider !== ""}
               >
                 {isSubmitting ? (
                   <>
@@ -181,6 +214,63 @@ export default function SignUpPage() {
             </form>
 
             <div className="divider my-0 text-sm text-[#737c76]">অথবা</div>
+
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
+              <button
+                type="button"
+                className="btn btn-outline flex min-h-11 w-full min-w-0 flex-nowrap justify-center gap-2 border-[#dfe7e0] bg-[#fafcfb] px-2 text-xs font-medium text-[#303832] hover:border-[#b9c8bc] hover:bg-[#f0f5f0] sm:text-sm"
+                onClick={() => handleSocialSignUp("google")}
+                disabled={isSubmitting || socialProvider !== ""}
+              >
+                {socialProvider === "google" ? (
+                  <span className="loading loading-spinner loading-sm shrink-0" />
+                ) : (
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="size-4 shrink-0"
+                  >
+                    <path
+                      fill="#4285F4"
+                      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1Z"
+                    />
+                    <path
+                      fill="#34A853"
+                      d="M12 23c2.97 0 5.46-.98 7.28-2.65l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.15v2.84A11 11 0 0 0 12 23Z"
+                    />
+                    <path
+                      fill="#FBBC05"
+                      d="M5.84 14.11a6.6 6.6 0 0 1 0-4.22V7.05H2.15a11 11 0 0 0 0 9.9l3.69-2.84Z"
+                    />
+                    <path
+                      fill="#EA4335"
+                      d="M12 5.36c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1a11 11 0 0 0-9.85 6.05l3.69 2.84C6.71 7.29 9.14 5.36 12 5.36Z"
+                    />
+                  </svg>
+                )}
+                <span className="whitespace-nowrap">Google দিয়ে সাইন আপ</span>
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-outline flex min-h-11 w-full min-w-0 flex-nowrap justify-center gap-2 border-[#dfe7e0] bg-[#fafcfb] px-2 text-xs font-medium text-[#303832] hover:border-[#b9c8bc] hover:bg-[#f0f5f0] sm:text-sm"
+                onClick={() => handleSocialSignUp("github")}
+                disabled={isSubmitting || socialProvider !== ""}
+              >
+                {socialProvider === "github" ? (
+                  <span className="loading loading-spinner loading-sm shrink-0" />
+                ) : (
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="size-4 shrink-0 fill-current"
+                  >
+                    <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.1c-3.1.67-3.76-1.31-3.76-1.31-.5-1.29-1.24-1.63-1.24-1.63-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.76 2.48 3.55 1.76.1-.72.39-1.21.7-1.49-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.15a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.05-1.15 3.05-1.15.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.29-2.61 5.23-5.1 5.51.4.35.75 1.03.75 2.08v3.08c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
+                  </svg>
+                )}
+                <span className="whitespace-nowrap">GitHub দিয়ে সাইন আপ</span>
+              </button>
+            </div>
 
             <p className="text-center text-sm text-[#5b645f] sm:text-base">
               অ্যাকাউন্ট আছে?{" "}
