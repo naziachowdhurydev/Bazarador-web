@@ -22,6 +22,7 @@ export default function SignUpPage() {
 
       const name = String(formData.get("name") ?? "").trim();
       const email = String(formData.get("email") ?? "").trim();
+      const image = String(formData.get("image") ?? "").trim();
       const password = String(formData.get("password") ?? "");
       const confirmPassword = String(formData.get("confirmPassword") ?? "");
 
@@ -34,6 +35,7 @@ export default function SignUpPage() {
         name,
         email,
         password,
+        image,
         callbackURL: "/",
       });
 
@@ -104,6 +106,19 @@ export default function SignUpPage() {
                   placeholder="you@example.com"
                   className="input input-bordered h-11 w-full border-gray-400 rounded-[10px] border-2 bg-[#fafcfb] text-sm text-[#171b18] placeholder:text-[#8a938c] focus:border-gray-700 focus:outline-gray-700 placeholder:px-1.5 sm:text-base"
                   required
+                />
+              </label>
+
+              <label className="form-control w-full gap-1.5">
+                <span className="label-text text-sm font-medium text-[#303832] sm:text-base">
+                  প্রোফাইল ছবি
+                </span>
+
+                <input
+                  name="image"
+                  type="url"
+                  placeholder="https://example.com/profile.jpg"
+                  className="input input-bordered h-11 w-full rounded-[10px] border-2 border-gray-400 bg-[#fafcfb] text-sm text-[#171b18] placeholder:text-[#8a938c] focus:border-gray-700 focus:outline-gray-700 sm:text-base"
                 />
               </label>
 

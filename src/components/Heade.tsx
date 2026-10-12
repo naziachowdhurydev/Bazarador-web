@@ -5,11 +5,12 @@ import { Suspense } from "react";
 import Marquee from "./Marquee";
 import CurrentDate from "./CurrentDate";
 import Link from "next/link";
+import UserInfo from "./UserInfo";
 
 const Header = () => {
   return (
     <header>
-      <div className="container mx-auto flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="relative container mx-auto flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
         {/* Logo + Website Name */}
         <Link href="/">
           <div className="flex items-center justify-center gap-2 sm:justify-start">
@@ -28,15 +29,7 @@ const Header = () => {
         </Link>
 
         {/* Sign In / Sign Up */}
-        <div className="flex w-full items-center justify-center gap-2 sm:w-auto">
-          <button className="rounded-2xl px-3 py-2 text-sm font-bold text-neutral-700 transition-colors hover:bg-gray-300 sm:px-4">
-            সাইন ইন
-          </button>
-
-          <button className="rounded-2xl bg-[#05893E] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-800 sm:px-5">
-            সাইন আপ
-          </button>
-        </div>
+        <UserInfo />
       </div>
 
       <Suspense fallback={null}>
