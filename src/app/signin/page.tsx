@@ -11,11 +11,11 @@ export default function SignInPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [socialProvider, setSocialProvider] = useState("");
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.SubmitEvent<HTMLElement>) => {
     event.preventDefault();
     setError("");
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(event.target);
     const email = String(formData.get("email") ?? "").trim();
     const password = String(formData.get("password") ?? "");
 
@@ -28,7 +28,9 @@ export default function SignInPage() {
       });
 
       if (result.error) {
-        setError(result.error.message ?? "সাইন ইন করা যায়নি। আবার চেষ্টা করুন।");
+        setError(
+          result.error.message ?? "সাইন ইন করা যায়নি। আবার চেষ্টা করুন।",
+        );
         return;
       }
 

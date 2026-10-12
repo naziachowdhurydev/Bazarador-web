@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 
 export default function SignUpPage() {
@@ -10,31 +10,33 @@ export default function SignUpPage() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
-
-    const formData = new FormData(event.currentTarget);
-    const name = String(formData.get("name") ?? "").trim();
-    const email = String(formData.get("email") ?? "").trim();
-    const password = String(formData.get("password") ?? "");
-    const confirmPassword = String(formData.get("confirmPassword") ?? "");
-
-    if (password !== confirmPassword) {
-      setError("দুটি পাসওয়ার্ড মিলছে না।");
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
+      const formData = new FormData(event.currentTarget);
+
+      const name = String(formData.get("name") ?? "").trim();
+      const email = String(formData.get("email") ?? "").trim();
+      const password = String(formData.get("password") ?? "");
+      const confirmPassword = String(formData.get("confirmPassword") ?? "");
+
+      if (password !== confirmPassword) {
+        setError("দুটি পাসওয়ার্ড মিলছে না।");
+        return;
+      }
+
       const result = await authClient.signUp.email({
         name,
         email,
         password,
+        callbackURL: "/",
       });
 
       if (result.error) {
+        console.error("Signup error:", result.error);
         setError(
           result.error.message ??
             "অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।",
@@ -42,11 +44,13 @@ export default function SignUpPage() {
         return;
       }
 
+      console.log("Signup successful:", result.data);
+
       router.push("/");
       router.refresh();
-    } catch (submissionError) {
-      console.error("Failed to create account:", submissionError);
-      setError("অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।");
+    } catch (err) {
+      console.error("Signup request failed:", err);
+      setError("সার্ভারে সমস্যা হয়েছে। টার্মিনালের error দেখুন।");
     } finally {
       setIsSubmitting(false);
     }
