@@ -14,7 +14,6 @@ export default function SignUpPage() {
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
-    setIsSubmitting(true);
 
     try {
       const formData = new FormData(event.currentTarget);
