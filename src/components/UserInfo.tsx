@@ -2,6 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 const UserInfo = () => {
   const { data: session } = authClient.useSession();
@@ -9,7 +10,20 @@ const UserInfo = () => {
   console.log(user);
 
   const handleSignOut = async () => {
-    await authClient.signOut();
+    try {
+      const result = await authClient.signOut();
+      if (result.error) {
+        const message =
+          result.error.message ?? "সাইন আউট করা যায়নি। আবার চেষ্টা করুন।";
+        toast.error(message);
+        return;
+      }
+
+      toast.success("সফলভাবে সাইন আউট হয়েছে।");
+    } catch (signOutError) {
+      console.error("Failed to sign out:", signOutError);
+      toast.error("সাইন আউট করা যায়নি। আবার চেষ্টা করুন।");
+    }
   };
 
   return (

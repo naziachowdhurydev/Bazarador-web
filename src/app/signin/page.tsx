@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -28,17 +29,21 @@ export default function SignInPage() {
       });
 
       if (result.error) {
-        setError(
-          result.error.message ?? "সাইন ইন করা যায়নি। আবার চেষ্টা করুন।",
-        );
+        const message =
+          result.error.message ?? "সাইন ইন করা যায়নি। আবার চেষ্টা করুন।";
+        setError(message);
+        toast.error(message);
         return;
       }
 
+      toast.success("সফলভাবে সাইন ইন হয়েছে।");
       router.push("/");
       router.refresh();
     } catch (signInError) {
       console.error("Failed to sign in:", signInError);
-      setError("সাইন ইন করা যায়নি। আবার চেষ্টা করুন।");
+      const message = "সাইন ইন করা যায়নি। আবার চেষ্টা করুন।";
+      setError(message);
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -55,16 +60,19 @@ export default function SignInPage() {
       });
 
       if (result.error) {
-        setError(
+        const message =
           result.error.message ??
-            `${provider === "google" ? "Google" : "GitHub"} দিয়ে সাইন ইন করা যায়নি।`,
-        );
+          `${provider === "google" ? "Google" : "GitHub"} দিয়ে সাইন ইন করা যায়নি।`;
+        setError(message);
+        toast.error(message);
+      } else {
+        toast.success("সফলভাবে সাইন ইন হয়েছে।");
       }
     } catch (socialError) {
       console.error(`Failed to sign in with ${provider}:`, socialError);
-      setError(
-        `${provider === "google" ? "Google" : "GitHub"} দিয়ে সাইন ইন করা যায়নি।`,
-      );
+      const message = `${provider === "google" ? "Google" : "GitHub"} দিয়ে সাইন ইন করা যায়নি।`;
+      setError(message);
+      toast.error(message);
     } finally {
       setSocialProvider("");
     }

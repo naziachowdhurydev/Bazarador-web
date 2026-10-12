@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 
 export default function SignUpPage() {
@@ -27,7 +26,9 @@ export default function SignUpPage() {
       const confirmPassword = String(formData.get("confirmPassword") ?? "");
 
       if (password !== confirmPassword) {
-        setError("দুটি পাসওয়ার্ড মিলছে না।");
+        const message = "দুটি পাসওয়ার্ড মিলছে না।";
+        setError(message);
+        toast.error(message);
         return;
       }
 
@@ -46,20 +47,24 @@ export default function SignUpPage() {
           return;
         }
 
-        setError(
+        const message =
           result.error.message ??
-            "অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।",
-        );
+          "অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।";
+        setError(message);
+        toast.error(message);
         return;
       }
 
       console.log("Signup successful:", result.data);
 
+      toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।");
       router.push("/");
       router.refresh();
     } catch (err) {
       console.error("Signup request failed:", err);
-      setError("সার্ভারে সমস্যা হয়েছে। টার্মিনালের error দেখুন।");
+      const message = "সার্ভারে সমস্যা হয়েছে। আবার চেষ্টা করুন।";
+      setError(message);
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -67,7 +72,6 @@ export default function SignUpPage() {
 
   return (
     <main className="flex flex-1 items-center justify-center bg-[#f0f5f0] px-4 py-10 sm:px-6 sm:py-14">
-      <ToastContainer position="top-right" autoClose={5000} />
       <div className="w-full max-w-md">
         <header className="mb-5 text-center sm:mb-6">
           <h1 className="text-2xl font-bold text-[#171b18] sm:text-3xl">
