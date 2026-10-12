@@ -165,10 +165,7 @@ async function ProductDetails({ params }: ProductPageProps) {
                   className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold sm:text-sm ${changeColor}`}
                 >
                   <span aria-hidden="true">{changeIcon}</span>
-                  {percentageFormatter.format(
-                    Math.abs(product.change.pct),
-                  )}
-                  %
+                  {percentageFormatter.format(Math.abs(product.change.pct))}%
                 </span>
               </div>
             </div>
