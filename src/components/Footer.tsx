@@ -1,4 +1,3 @@
-//
 export default function Footer() {
   return (
     <footer className="border-t border-[#dfe7e0] bg-[#fafcfb]">
